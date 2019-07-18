@@ -1,6 +1,6 @@
 //module imports
 var express = require('express');
-const gpio = require('onoff').Gpio;
+var wpi = require('wiring-pi');
 
 //utility imports
 var config = require('./utils/config');
@@ -18,7 +18,8 @@ app.use('/assets', express.static('assets'));
 app.use('/controllers', express.static('controllers'));
 
 //Setting up Gpio pin
-var pin = new gpio(config.pin, 'out');
+wpi.wiringPiSetup();
+wpi.pinMode(config.pin, wpi.OUTPUT);
 
 //routing
 app.get('/', (req, res) => {
@@ -27,13 +28,13 @@ app.get('/', (req, res) => {
 
 //button clicks
 app.get('/on', (req, res) => {
-    pin.writeSync(1);
+    wpi.digitalWrite(config.pin, 1);
     console.log('on');
     res.render('index');
 });
 
 app.get('/off', (req, res) => {
-    pin.writeSync(0);
+    wpi.digitalWrite(config.pin, 0);
     console.log('off');
     res.render('index');
 });
