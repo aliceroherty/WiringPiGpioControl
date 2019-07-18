@@ -1,6 +1,6 @@
 //module imports
 var express = require('express');
-var wpi = require('wiring-pi');
+var wpi = require('./node_modules/wiring-pi');
 
 //utility imports
 var config = require('./utils/config');
